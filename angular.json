@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "svgexample"
+  "defaultProject": "svgexample",
+  "cli": {
+    "analytics": false
+  }
 }
