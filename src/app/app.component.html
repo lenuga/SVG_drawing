@@ -3,10 +3,59 @@
   </div>
   <div class="col-10">
     <h4>{{counter}}</h4>
-    <svg viewBox="0 0 1500 600" width="1500" height="600" style="border: #09035e solid" (click)="count($event)" (mousemove)="mouseMove($event)" (dblclick)="endDraw($event)" (click)="addpoints($event)" (click)="findShape()">
-      <path *ngFor="let shape of finalShape; index as i" (click)="click($event)" (dblclick)="getShapeId($event)" [attr.id]="i" [attr.d]="shape" stroke="black" fill="blue"/>
+    <svg viewBox="0 0 1000 1000" width="1000" height="1000" style="border: #09035e solid" (click)="count($event)" (mousemove)="mouseMove($event)" (dblclick)="endDraw($event)" (mouseup)="mouseDrag($event)" (click)="addpoints($event)" (click)="findShape()">
+       <marker id="markerCircle" markerWidth="8" markerHeight="8" refX="5" refY="5">
+        <!-- <circle cx="" cy="" r="3" style="stroke: none; fill:#000000;"/> -->
+    </marker>
+      <path *ngFor="let shape of finalShape; index as i" (mousedown)="mouseDown($event)"  (click)="click($event)" (dblclick)="getShapeId($event)" [attr.id]="i" [attr.d]="shape" stroke="black" fill="blue"/>
       <path [attr.d]="drawPoints" style="fill:none;stroke:#240c2e;stroke-width:3" />
         <circle [attr.cx]="circleX" [attr.cy]="circleY" stroke="red" stroke-width="3" fill="red" />
+        
+ <rect id="r" x="50" y="50" height="110" width="110"
+          style="stroke:#ff0000; fill: #ccccff"
+          transform="translate(30) rotate(45 50 50)"
+           (click)="getShapeId($event)" >
+    </rect>
+
+        <path stroke="green" stroke-width=".3" d="M50 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M100 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M150 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M200 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M250 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M300 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M350 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M400 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M450 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M500 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M550 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M600 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M650 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M700 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M750 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M800 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M850 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M900 0 v1000"/>
+        <path stroke="green" stroke-width=".3" d="M950 0 v1000"/>
+
+        <path stroke="green" stroke-width=".3" d="M0 50 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 100 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 150 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 200 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 250 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 300 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 350 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 400 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 450 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 500 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 550 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 600 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 650 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 700 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 750 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 800 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 850 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 900 H1000"/>
+        <path stroke="green" stroke-width=".3" d="M0 950 H1000"/>
     </svg>
   </div>
 </div>

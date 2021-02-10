@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { count } from 'console';
 
 @Component({
    selector: 'app-root',
@@ -17,20 +16,31 @@ export class AppComponent {
    drawPoints: any;
    circleX: any;
    circleY: any;
-  //  r: any;
-  //  cy: any[] =[];
-  //  cx: any[] =[];
+   x: any;
+   y: any;
    positionArray: any[] = [];
-  finalPosition: any[] = [];
-  positionString= '';
-  stringArray: any[]= [];
+   finalPosition: any[] = [];
+   positionString= '';
+   stringArray: any[]= [];
+   mouseupX: any;
+   mouseupY: any;
+   mousedownX: any;
+   mousedownY: any;
+   X: any;
+   Y: any;
+   mouseMoveX: any;
+   mouseMoveY: any;
 
    constructor(){}
 
 
   addpoints(event: any){
+    if(this.draw){
    this.pointArrays.push(event.offsetX);
    this.pointArrays.push(event.offsetY);
+   this.x = event.offsetX;
+   this.y = event.offsetY;
+    }
   // console.log(this.pointArrays);
 
   }
@@ -38,13 +48,13 @@ export class AppComponent {
    count(event: any){ return this.counter++; }
 
   findShape() {
-   let shape = '';
-  // let position = '';
+   let shape;
+   let position = '';
    for (let i = 0; i < this.pointArrays.length; i++)
    {
      if (i === 0) {
          shape = 'M' + this.pointArrays[i] + ' ' + this.pointArrays[i + 1];
-        // position = this.pointArrays[i] + ' ' + this.pointArrays[i + 1];
+         //position = this.pointArrays[i] + ' ' + this.pointArrays[i + 1];
      }
      if (i > 1) {
          shape = shape + ' L' + this.pointArrays[i] + ' ' + this.pointArrays[i + 1];
@@ -52,32 +62,23 @@ export class AppComponent {
          i++;
      }
      this.shapes = shape + ' Z';
-    // this.positionString = position;
+     //this.positionString = position;
     }
   //this.finalShape.push(this.shapes);
- // console.log(this.finalShape);
+  // console.log(this.finalShape);
+
    }
 
 endDraw(event: any){
     this.draw = !this.draw;
-    if(this.draw){
+   //if(this.draw){
     this.finalShape.push(this.shapes);
     this.positionArray.push(this.positionString);
     console.warn(this.positionArray);
     this.pointArrays.length = 0;
     this.pointArrays.splice(0, this.pointArrays.length);
-  }
+ // }
 }
-
-mouseMove(event: any){
-
-  //  console.log(event.offsetX, event.offsetY);
-    let xyPoint = this.pointArrays.length;
-    
-    this.drawPoints = 'M' + this.pointArrays[xyPoint - 2] + ' ' + this.pointArrays[xyPoint - 1] + ' L' + event.offsetX + ' ' + event.offsetY;
-    //console.log(this.drawPoints);
- 
- }
 
  click(event: any)
  {
@@ -90,22 +91,51 @@ mouseMove(event: any){
    }
    //console.log(str);
  this.stringArray = str.split(" ");
+ this.stringArray.pop();
  console.log(this.stringArray);
  let filterd = this.stringArray.filter(function(el) {
 return true;
  });
  console.log(filterd);
+ 
  }
 
+ mouseMove(event: any){
+  //  console.log(event.offsetX, event.offsetY);
+   // let xyPoint = this.pointArrays.length;
+    if(this.draw){
+     this.drawPoints = 'M' + this.x + ' ' + this.y + ' L' + event.offsetX + ' ' + event.offsetY;
+    }
+    //console.log(this.drawPoints);
+   this.X = (this.mouseupX - this.mousedownX);
+   this.Y = (this.mouseupY - this.mousedownY);
+   console.log(this.X);
+   console.log(this.Y);
+   this.mouseMoveX = event.offsetX;
+   this.mouseMoveY = event.offsetY;
 
+   this.startDrag(this.el, this.mouseMoveX, this.mouseMoveY)
+ }
+
+private startDrag(selectedShape: SVGGraphicsElement, mx: number, my: number) {
+const x = (mx - this.mousedownX);
+const y = (my - this.mousedownY);
+if (selectedShape) {
+selectedShape.setAttribute('transform', `translate(${x}, ${y})`);
+console.log(this.x);
+console.log(this.y);
+console.log(selectedShape);
+}
+}
+
+el: any;
 getShapeId(event: any){
     console.log(event.target.id);
     this.delete(event.target.id);
-    console.log(this.pointArrays[event.target.id - 1])
+    console.log(this.pointArrays[event.target.id - 1]);
+    this.el = document.getElementById(event.target.id);
+    console.log(this.el);
 }
-// positionChange(id: number){
-//   this.finalPosition.(id, 1);
-// }
 
 delete(id: number) {
     console.log(this.finalShape);
@@ -114,21 +144,30 @@ delete(id: number) {
     console.log('deleted');
 } 
 
- } 
+//Mouse up event 
+mouseDrag(event: any){
+  this.mouseupX = event.offsetX;
+  this.mouseupY = event.offsetY;
+  //console.log(this.mouseupX);
+  //console.log(this.mouseupY);
 
-// let x;
-// for(let j = 0; j < this.pointArrays.length; j++)
-// {
-  
+}
+
+//Mouse down event
+mouseDown(event: any){
+  this.mousedownX = event.offsetX;
+  this.mousedownY = event.offsetY;
+  // console.log(this.mousedownX);
+  // console.log(this.mousedownY);
+
+}
+// translate(){
+//  let a = this.X;
+//  let b = this.Y;
 // }
 
-//  @ViewChild('connectorSVG', { static: false }) connectorSVG: ElementRef;
-// resetPath(path: string) {
-//   this.finalShape = path;
-//   let rect = this.connectorSVG.nativeElement.getBBox();
-//   this.finalShape.Height = rect.height;
-//   this.finalShape.Width = rect.width;
-//}
+} 
+
 
 
 
